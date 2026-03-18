@@ -17,6 +17,9 @@ o	Resistors (330Ω)
 o	Seven Segment Display to Port P2 of the microcontroller.
 o	Power (VCC & GND) and appropriate resistors.
 4.	Save the design and proceed to programming in Keil.
+   
+## Circuit Diagram
+<img width="1920" height="1200" alt="Screenshot 2026-03-18 222443" src="https://github.com/user-attachments/assets/1fda686b-5e3f-4a10-90c3-87fc7de03cb4" />
 
 ## Algorithm:
 1.	Load DPTR with the address of the lookup table containing seven-segment hex values.
@@ -28,12 +31,12 @@ o	Power (VCC & GND) and appropriate resistors.
 7.	Repeat the process infinitely.
 
 ## Explanation:
-•	Lookup Table (0100H - 0109H): Stores hexadecimal values for displaying digits 0-9.
-•	MOVC A, @A+DPTR: Retrieves the corresponding segment pattern for the digit.
-•	MOV P2, A: Sends data to Port 2, which is connected to the seven-segment display.
-•	ACALL D: Calls the delay subroutine to maintain visibility of each digit.
-•	Delay Subroutine: Creates a time delay using nested loops.
-•	SJMP L: Runs the digit display sequence in an infinite loop.
+•	Lookup Table (0100H - 0109H): Stores hexadecimal values for displaying digits 0-9.</br>
+•	MOVC A, @A+DPTR: Retrieves the corresponding segment pattern for the digit.</br>
+•	MOV P2, A: Sends data to Port 2, which is connected to the seven-segment display.</br>
+•	ACALL D: Calls the delay subroutine to maintain visibility of each digit.</br>
+•	Delay Subroutine: Creates a time delay using nested loops.</br>
+•	SJMP L: Runs the digit display sequence in an infinite loop.</br>
 
 ## Simulation in Proteus:
 1.	Open Proteus and load the HEX file generated from Keil.
@@ -41,9 +44,44 @@ o	Power (VCC & GND) and appropriate resistors.
 3.	Run the simulation and observe the digits 0 to 9 appearing sequentially.
 
 ## Program:
+```
+ORG 0000H
+	UP: MOV P2, #0C0H
+	ACALL DELAY
+	MOV P2, #0F9H
+	ACALL DELAY
+	MOV P2, #0A4H
+	ACALL DELAY
+	MOV P2, #0B0H
+	ACALL DELAY
+	MOV P2, # 99H
+	ACALL DELAY
+	MOV P2, # 92H
+	ACALL DELAY
+	MOV P2, # 82H
+	ACALL DELAY
+	MOV P2, #0F8H
+	ACALL DELAY
+	MOV P2, #80H 
+	ACALL DELAY
+	MOV P2, #90H
+	ACALL DELAY
+
+
+DELAY: MOV R5, #10
+	H1: MOV R4, #180
+	H2: MOV R3, #255
+	H3:DJNZ R3,H3
+	DJNZ R4,H2
+	DJNZ R5,H1
+	RET
+	END
+```
+<img width="1920" height="1200" alt="Screenshot 2026-03-18 222459" src="https://github.com/user-attachments/assets/3dc0bd04-f1f7-4cb3-9681-d6cb8428fef0" />
 
 
 ## Output:
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/eae97adc-45a2-422f-b758-4983664c1f6f" />
 
 
 ## Result:
